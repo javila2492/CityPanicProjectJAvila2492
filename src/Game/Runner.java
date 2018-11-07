@@ -21,18 +21,26 @@ public class Runner
             if(a.toLowerCase().contains("small"))
             {
                 cityGrid = new Blocks[3][3];
+                System.out.println("The board is now as small as your will to fight.");
+                pon = true;
             }
             if(a.toLowerCase().contains("medium"))
             {
                 cityGrid = new Blocks[5][5];
+                System.out.println("The board is now as average as you are.");
+                pon = true;
             }
             if(a.toLowerCase().contains("large"))
             {
                 cityGrid = new Blocks[8][8];
+                System.out.println("The board is now large, like your fighting spirit.");
+                pon = true;
             }
             if(a.toLowerCase().contains("deluxe"))
             {
                 cityGrid = new Blocks[15][15];
+                System.out.println("The board is now deluxe. May the lord have mercy on your soul.");
+                pon = true;
             }
         }
 
@@ -41,7 +49,8 @@ public class Runner
         {
             for (int y = 0; y < cityGrid[x].length; y++)
             {
-                cityGrid[x][y] = new Blocks(x,y, (int) Math.random() * 5);
+                if(x > 1 && y > 1)
+                    cityGrid[x][y] = new Blocks(x,y, (int) (Math.random() * 5));
             }
         }
 

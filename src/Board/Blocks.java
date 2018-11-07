@@ -1,5 +1,6 @@
 package Board;
 
+import Game.Runner;
 import People.Person;
 
 public class Blocks {
@@ -38,6 +39,11 @@ public class Blocks {
     {
         System.out.println(blockDesc[(int) (Math.random() * 3)]);
         occupant = x;
+        if(this.eCo > 0)
+        {
+            Runner.battle = true;
+            System.out.println("Battle start!");
+        }
         x.setxLoc(this.xLoc);
         x.setyLoc(this.yLoc);
     }
