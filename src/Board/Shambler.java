@@ -2,8 +2,8 @@ package Board;
 
 public class Shambler
 {
-    public String name = "Shambler";
-    public int hp = 3;
-    public int atk = 1;
-    public String desc[] = {"It looks at you with hatred in its eyes.", "A foul stench fills the area.", "They seem familiar..."};
+    public static String name = "Shambler";
+    public static int hp = 3;
+    public static int atk = 1;
+    public static String desc[] = {"A creature looks at you with hatred in its eyes.", "A foul stench fills the area..."};
 }

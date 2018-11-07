@@ -1,20 +1,40 @@
 package Game;
 
-import People.Person;
-import People.Vinchezo;
-import People.Vellisima;
-import People.Iggy;
-import People.Machina;
+import People.*;
 import Board.Blocks;
 import java.util.Scanner;
 
 public class Runner
 {
     private static boolean gameOn = true;
+    public static boolean battle = false;
 
     public static void main(String[] args)
     {
-        Blocks[][] cityGrid = new Blocks[5][5];
+        Blocks[][] cityGrid = null;
+        Scanner in = new Scanner(System.in);
+        boolean pon = false;
+        System.out.println("How large do you want the board to be? Small, Medium, Large, or Deluxe?");
+        while(!pon)
+        {
+            String a = in.nextLine();
+            if(a.toLowerCase().contains("small"))
+            {
+                cityGrid = new Blocks[3][3];
+            }
+            if(a.toLowerCase().contains("medium"))
+            {
+                cityGrid = new Blocks[5][5];
+            }
+            if(a.toLowerCase().contains("large"))
+            {
+                cityGrid = new Blocks[8][8];
+            }
+            if(a.toLowerCase().contains("deluxe"))
+            {
+                cityGrid = new Blocks[15][15];
+            }
+        }
 
         //Fill the cityGrid with blocks
         for (int x = 0; x < cityGrid.length; x++)
@@ -28,7 +48,6 @@ public class Runner
 
         //Setup player and the input scanner
         Person player = null;
-        Scanner in = new Scanner(System.in);
         boolean con = false;
         while(!con)
         {
@@ -44,7 +63,7 @@ public class Runner
                 System.out.println("Are you sure you want to pick this character?");
                 if((in.nextLine().toLowerCase()).contains("yes"))
                 {
-                    player = new Person(Vinchezo.name, Vinchezo.hp, Vinchezo.atk, Vinchezo.skill,0, 0);
+                    player = new Person(Vinchezo.name, Vinchezo.hp, Vinchezo.atk, Vinchezo.skill,0, 0, Vinchezo.sNum);
                     con = true;
                 }
             }
@@ -58,7 +77,7 @@ public class Runner
                 System.out.println("Are you sure you want to pick this character?");
                 if((in.nextLine().toLowerCase()).contains("yes"))
                 {
-                    player = new Person(Vellisima.name, Vellisima.hp, Vellisima.atk, Vellisima.skill,0, 0);
+                    player = new Person(Vellisima.name, Vellisima.hp, Vellisima.atk, Vellisima.skill,0, 0, Vellisima.sNum);
                     con = true;
                 }
             }
@@ -72,7 +91,7 @@ public class Runner
                 System.out.println("Are you sure you want to pick this character?");
                 if((in.nextLine().toLowerCase()).contains("yes"))
                 {
-                    player = new Person(Iggy.name, Iggy.hp, Iggy.atk, Iggy.skill,0, 0);
+                    player = new Person(Iggy.name, Iggy.hp, Iggy.atk, Iggy.skill,0, 0, Iggy.sNum);
                     con = true;
                 }
             }
@@ -86,7 +105,7 @@ public class Runner
                 System.out.println("Are you sure you want to pick this character?");
                 if((in.nextLine().toLowerCase()).contains("yes"))
                 {
-                    player = new Person(Machina.name, Machina.hp, Machina.atk, Machina.skill,0, 0);
+                    player = new Person(Machina.name, Machina.hp, Machina.atk, Machina.skill,0, 0, Machina.sNum);
                     con = true;
                 }
             }
@@ -115,7 +134,7 @@ public class Runner
      * Checks that the movement chosen is within the valid game map.
      * @param move the move chosen
      * @param p person moving
-     * @param map the 2D array of Blockss
+     * @param map the 2D array of Blocks
      * @return
      */
     public static boolean validMove(String move, Person p, Blocks[][] map)
@@ -123,6 +142,11 @@ public class Runner
         move = move.toLowerCase().trim();
         switch (move) {
             case "n":
+                if(battle)
+                {
+                    System.out.println("You can't move blocks now! You're in a battle!");
+                    return false;
+                }
                 if (p.getxLoc() > 0)
                 {
                     map[p.getxLoc()][p.getyLoc()].leaveBlocks(p);
@@ -134,6 +158,11 @@ public class Runner
                     return false;
                 }
             case "e":
+                if(battle)
+                {
+                    System.out.println("You can't move blocks now! You're in a battle!");
+                    return false;
+                }
                 if (p.getyLoc()< map[p.getyLoc()].length -1)
                 {
                     map[p.getxLoc()][p.getyLoc()].leaveBlocks(p);
@@ -146,6 +175,11 @@ public class Runner
                 }
 
             case "s":
+                if(battle)
+                {
+                    System.out.println("You can't move blocks now! You're in a battle!");
+                    return false;
+                }
                 if (p.getxLoc() < map.length - 1)
                 {
                     map[p.getxLoc()][p.getyLoc()].leaveBlocks(p);
@@ -158,6 +192,11 @@ public class Runner
                 }
 
             case "w":
+                if(battle)
+                {
+                    System.out.println("You can't move blocks now! You're in a battle!");
+                    return false;
+                }
                 if (p.getyLoc() > 0)
                 {
                     map[p.getxLoc()][p.getyLoc()].leaveBlocks(p);
@@ -168,6 +207,15 @@ public class Runner
                 {
                     return false;
                 }
+            case "f":
+                System.out.println("You are about to use your skill, " + p.skill.name + ". Where do you want to use it?");
+                Scanner in = new Scanner(System.in);
+                boolean con = false;
+                while(!con)
+                {
+                    Skills.useSkill(p.skillNum, p);
+                }
+                return true;
             default:
                 break;
 

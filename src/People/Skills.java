@@ -1,5 +1,7 @@
 package People;
 
+import java.util.Scanner;
+
 public class Skills
 {
     public String name;
@@ -10,5 +12,13 @@ public class Skills
         this.name = name;
         this.cost = cost;
         this.desc = desc;
+    }
+    public static void useSkill(int s, Person p)
+    {
+        Scanner in = new Scanner(System.in);
+        if(s == 1)
+        {
+
+        }
     }
 }
