@@ -7,27 +7,28 @@ public class Blocks {
     Person occupant;
     int xLoc,yLoc, eCo;
     String[] blockDesc = {"You enter a dark alleyway littered with trash.", "You enter the ruins of a shopping mall.", "You enter a dilapidated train station."};
+    Monsters monsterRally[] = null;
 
     public Blocks(int x, int y, int enCount)
     {
         xLoc = x;
         yLoc = y;
         eCo = enCount;
-        Monsters monsterRally[] = new Monsters[enCount];
+        monsterRally = new Monsters[enCount];
         int r = 0;
         for(int i = 0; i < eCo; i++)
         {
             r = (int) (Math.random() * 5);
             if(r == 1)
-                monsterRally[i] = new Monsters(Shambler.name, Shambler.hp, Shambler.atk);
+                monsterRally[i] = new Monsters(Shambler.name, Shambler.hp, Shambler.atk, Shambler.desc[(int) (Math.random() * Shambler.desc.length)]);
             if(r == 2)
-                monsterRally[i] = new Monsters(HardenedShambler.name, HardenedShambler.hp, HardenedShambler.atk);
+                monsterRally[i] = new Monsters(HardenedShambler.name, HardenedShambler.hp, HardenedShambler.atk, HardenedShambler.desc[(int) (Math.random() * HardenedShambler.desc.length)]);
             if(r == 3)
-                monsterRally[i] = new Monsters(Speedster.name, Speedster.hp, Speedster.atk);
+                monsterRally[i] = new Monsters(Speedster.name, Speedster.hp, Speedster.atk, Speedster.desc[(int) (Math.random() * Speedster.desc.length)]);
             if(r == 4)
-                monsterRally[i] = new Monsters(ViciousSpeedster.name, ViciousSpeedster.hp, ViciousSpeedster.atk);
+                monsterRally[i] = new Monsters(ViciousSpeedster.name, ViciousSpeedster.hp, ViciousSpeedster.atk, ViciousSpeedster.desc[(int) (Math.random() * ViciousSpeedster.desc.length)]);
             if(r == 5 && (int) (Math.random() * 5) == 5)
-                monsterRally[i] = new Monsters(Tank.name, Tank.hp, Tank.atk);
+                monsterRally[i] = new Monsters(Tank.name, Tank.hp, Tank.atk, Tank.desc);
         }
     }
 
@@ -39,10 +40,13 @@ public class Blocks {
     {
         System.out.println(blockDesc[(int) (Math.random() * 3)]);
         occupant = x;
+        System.out.println(this.eCo);
         if(this.eCo > 0)
         {
             Runner.battle = true;
             System.out.println("Battle start!");
+            for(int i = 0; i < this.eCo; i++)
+                System.out.println(this.monsterRally[i].desc);
         }
         x.setxLoc(this.xLoc);
         x.setyLoc(this.yLoc);

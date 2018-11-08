@@ -43,6 +43,10 @@ public class Runner
                 pon = true;
             }
         }
+        pon = false;
+        System.out.println("How difficult do you want your experience to be? Easy, Medium, Hard, or Nightmare?");
+        while(!pon)
+
 
         //Fill the cityGrid with blocks
         for (int x = 0; x < cityGrid.length; x++)
@@ -51,9 +55,10 @@ public class Runner
             {
                 if(x > 1 && y > 1)
                     cityGrid[x][y] = new Blocks(x,y, (int) (Math.random() * 5));
+                else
+                    cityGrid[x][y] = new Blocks(x,y, 0);
             }
         }
-
 
         //Setup player and the input scanner
         Person player = null;
@@ -154,7 +159,7 @@ public class Runner
                 if(battle)
                 {
                     System.out.println("You can't move blocks now! You're in a battle!");
-                    return false;
+                    break;
                 }
                 if (p.getxLoc() > 0)
                 {
@@ -170,7 +175,7 @@ public class Runner
                 if(battle)
                 {
                     System.out.println("You can't move blocks now! You're in a battle!");
-                    return false;
+                    break;
                 }
                 if (p.getyLoc()< map[p.getyLoc()].length -1)
                 {
@@ -187,7 +192,7 @@ public class Runner
                 if(battle)
                 {
                     System.out.println("You can't move blocks now! You're in a battle!");
-                    return false;
+                    break;
                 }
                 if (p.getxLoc() < map.length - 1)
                 {
@@ -204,7 +209,7 @@ public class Runner
                 if(battle)
                 {
                     System.out.println("You can't move blocks now! You're in a battle!");
-                    return false;
+                    break;
                 }
                 if (p.getyLoc() > 0)
                 {
