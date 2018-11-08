@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 public class Runner
 {
+    public static Blocks[][] cityGrid = null;
     private static boolean gameOn = true;
     public static boolean battle = false;
 
     public static void main(String[] args)
     {
-        Blocks[][] cityGrid = null;
         Scanner in = new Scanner(System.in);
         boolean pon = false;
         System.out.println("How large do you want the board to be? Small, Medium, Large, or Deluxe?");
@@ -44,22 +44,48 @@ public class Runner
             }
         }
         pon = false;
+        int monSpawn = 0;
         System.out.println("How difficult do you want your experience to be? Easy, Medium, Hard, or Nightmare?");
-        while(!pon)
-
+        while(!pon){
+            String a = in.nextLine();
+            if(a.toLowerCase().contains("easy"))
+            {
+                monSpawn = 2;
+                System.out.println("How pathetic.");
+                pon = true;
+            }
+            if(a.toLowerCase().contains("medium"))
+            {
+                monSpawn = 4;
+                System.out.println("Better than easy, I guess.");
+                pon = true;
+            }
+            if(a.toLowerCase().contains("hard"))
+            {
+                monSpawn = 6;
+                System.out.println("Good luck. You'll need it. Lots of it.");
+                pon = true;
+            }
+            if(a.toLowerCase().contains("nightmare"))
+            {
+                monSpawn = 10;
+                System.out.println("You won't win.");
+                pon = true;
+            }
+        }
 
         //Fill the cityGrid with blocks
         for (int x = 0; x < cityGrid.length; x++)
         {
             for (int y = 0; y < cityGrid[x].length; y++)
             {
-                if(x > 1 && y > 1)
-                    cityGrid[x][y] = new Blocks(x,y, (int) (Math.random() * 5));
-                else
+                if(x <= 1 && y <= 1)
                     cityGrid[x][y] = new Blocks(x,y, 0);
+                else
+                    cityGrid[x][y] = new Blocks(x,y, (int) (Math.random() * monSpawn));
             }
         }
-
+        System.out.println(Blocks.printGrid());
         //Setup player and the input scanner
         Person player = null;
         boolean con = false;
@@ -128,11 +154,13 @@ public class Runner
         cityGrid[0][0].enterBlocks(player);
         while(gameOn)
         {
-            System.out.println("Where would you like to move? (Choose N, S, E, W)");
+            if(!battle)
+                System.out.println("Where would you like to move? (Choose N, S, E, W). F to use skill.");
             String move = in.nextLine();
             if(validMove(move, player, cityGrid))
             {
-                System.out.println("Your coordinates: row = " + player.getxLoc() + " col = " + player.getyLoc());
+                if(!battle)
+                    System.out.println("Your coordinates: row = " + player.getxLoc() + " col = " + player.getyLoc());
 
             }
             else {
@@ -222,12 +250,12 @@ public class Runner
                     return false;
                 }
             case "f":
-                System.out.println("You are about to use your skill, " + p.skill.name + ". Where do you want to use it?");
                 Scanner in = new Scanner(System.in);
                 boolean con = false;
                 while(!con)
                 {
                     Skills.useSkill(p.skillNum, p);
+                    con = true;
                 }
                 return true;
             default:

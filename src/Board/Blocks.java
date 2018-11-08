@@ -5,9 +5,11 @@ import People.Person;
 
 public class Blocks {
     Person occupant;
-    int xLoc,yLoc, eCo;
+    int xLoc;
+    int yLoc;
+    public int eCo;
     String[] blockDesc = {"You enter a dark alleyway littered with trash.", "You enter the ruins of a shopping mall.", "You enter a dilapidated train station."};
-    Monsters monsterRally[] = null;
+    public Monsters[] monsterRally = null;
 
     public Blocks(int x, int y, int enCount)
     {
@@ -50,6 +52,27 @@ public class Blocks {
         }
         x.setxLoc(this.xLoc);
         x.setyLoc(this.yLoc);
+    }
+    public static String printGrid()
+    {
+        String h = "";
+        for(int i = 0; i < Runner.cityGrid.length; i++)
+        {
+            for(int j = 0; j < Runner.cityGrid[i].length; j++)
+            {
+                if(i == 0 && j == 0)
+                    h += "[Y]";
+                else
+                {
+                    if (Runner.cityGrid[i][j].eCo > 0) {
+                        h += "[X]";
+                    } else
+                        h += "[ ]";
+                }
+            }
+            h += "\n";
+        }
+        return h;
     }
 
     /**
