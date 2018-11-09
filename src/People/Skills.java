@@ -110,6 +110,8 @@ public class Skills
                         Runner.cityGrid[p.getxLoc()][p.getyLoc()].monsterRally = null;
                         Runner.cityGrid[p.getxLoc()][p.getyLoc()].eCo = 0;
                         Runner.battle = false;
+                        System.out.println("Machina's firepower mows down everything in sight! But Machina takes " + (20 - p.hp) + " damage!");
+                        pon = true;
                     }
                     if(p.getxLoc() == b1 && p.getyLoc() < b2)
                     {
@@ -122,6 +124,8 @@ public class Skills
                         Runner.cityGrid[p.getxLoc()][p.getyLoc()].monsterRally = null;
                         Runner.cityGrid[p.getxLoc()][p.getyLoc()].eCo = 0;
                         Runner.battle = false;
+                        System.out.println("Machina's firepower mows down everything in sight! But Machina takes " + (20 - p.hp) + " damage!");
+                        pon = true;
                     }
                     if(p.getyLoc() == b2 && p.getxLoc() > b1)
                     {
@@ -134,6 +138,8 @@ public class Skills
                         Runner.cityGrid[p.getxLoc()][p.getyLoc()].monsterRally = null;
                         Runner.cityGrid[p.getxLoc()][p.getyLoc()].eCo = 0;
                         Runner.battle = false;
+                        System.out.println("Machina's firepower mows down everything in sight! But Machina takes " + (20 - p.hp) + " damage!");
+                        pon = true;
                     }
                     if(p.getyLoc() == b2 && p.getxLoc() < b1)
                     {
@@ -146,10 +152,10 @@ public class Skills
                         Runner.cityGrid[p.getxLoc()][p.getyLoc()].monsterRally = null;
                         Runner.cityGrid[p.getxLoc()][p.getyLoc()].eCo = 0;
                         Runner.battle = false;
+                        System.out.println("Machina's firepower mows down everything in sight! But Machina takes " + (20 - p.hp) + " damage!");
+                        pon = true;
                     }
                 }
-                System.out.println("Machina's firepower mows down everything in sight! But Machina takes " + (20 - p.hp) + " damage!");
-                pon = true;
             }
         }
     }
