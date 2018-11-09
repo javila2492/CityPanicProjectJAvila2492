@@ -22,19 +22,19 @@ public class Runner
             String a = in.nextLine();
             if(a.toLowerCase().contains("small"))
             {
-                cityGrid = new Blocks[3][3];
+                cityGrid = new Blocks[4][4];
                 System.out.println("The board is now as small as your will to fight.");
                 pon = true;
             }
             if(a.toLowerCase().contains("medium"))
             {
-                cityGrid = new Blocks[5][5];
+                cityGrid = new Blocks[6][6];
                 System.out.println("The board is now as average as you are.");
                 pon = true;
             }
             if(a.toLowerCase().contains("large"))
             {
-                cityGrid = new Blocks[8][8];
+                cityGrid = new Blocks[9][9];
                 System.out.println("The board is now large, like your fighting spirit.");
                 pon = true;
             }

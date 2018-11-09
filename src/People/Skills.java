@@ -105,10 +105,11 @@ public class Skills
                         {
                             Runner.cityGrid[b1][i].monsterRally = null;
                             Runner.cityGrid[b1][i].eCo = 0;
-                            if (b1 == p.getxLoc() && i == p.getyLoc())
-                                Runner.battle = false;
                             p.hp--;
                         }
+                        Runner.cityGrid[p.getxLoc()][p.getyLoc()].monsterRally = null;
+                        Runner.cityGrid[p.getxLoc()][p.getyLoc()].eCo = 0;
+                        Runner.battle = false;
                     }
                     if(p.getxLoc() == b1 && p.getyLoc() < b2)
                     {
@@ -116,10 +117,11 @@ public class Skills
                         {
                             Runner.cityGrid[b1][i].monsterRally = null;
                             Runner.cityGrid[b1][i].eCo = 0;
-                            if (b1 == p.getxLoc() && i == p.getyLoc())
-                                Runner.battle = false;
                             p.hp--;
                         }
+                        Runner.cityGrid[p.getxLoc()][p.getyLoc()].monsterRally = null;
+                        Runner.cityGrid[p.getxLoc()][p.getyLoc()].eCo = 0;
+                        Runner.battle = false;
                     }
                     if(p.getyLoc() == b2 && p.getxLoc() > b1)
                     {
@@ -127,10 +129,11 @@ public class Skills
                         {
                             Runner.cityGrid[b2][i].monsterRally = null;
                             Runner.cityGrid[b2][i].eCo = 0;
-                            if (b2 == p.getyLoc() && i == p.getxLoc())
-                                Runner.battle = false;
                             p.hp--;
                         }
+                        Runner.cityGrid[p.getxLoc()][p.getyLoc()].monsterRally = null;
+                        Runner.cityGrid[p.getxLoc()][p.getyLoc()].eCo = 0;
+                        Runner.battle = false;
                     }
                     if(p.getyLoc() == b2 && p.getxLoc() < b1)
                     {
@@ -138,13 +141,14 @@ public class Skills
                         {
                             Runner.cityGrid[b2][i].monsterRally = null;
                             Runner.cityGrid[b2][i].eCo = 0;
-                            if (b2 == p.getyLoc() && i == p.getxLoc())
-                                Runner.battle = false;
                             p.hp--;
                         }
+                        Runner.cityGrid[p.getxLoc()][p.getyLoc()].monsterRally = null;
+                        Runner.cityGrid[p.getxLoc()][p.getyLoc()].eCo = 0;
+                        Runner.battle = false;
                     }
                 }
-                System.out.println("Machina's firepower mows down everything in sight! But Machina takes " + (14 - p.hp) + " damage!");
+                System.out.println("Machina's firepower mows down everything in sight! But Machina takes " + (20 - p.hp) + " damage!");
                 pon = true;
             }
         }
