@@ -101,7 +101,6 @@ public class Skills
                         {
                             Runner.cityGrid[b1][i].monsterRally = null;
                             Runner.cityGrid[b1][i].eCo = 0;
-                            System.out.println(b2 + ", " + i);
                             if (b1 == p.getxLoc() && i == p.getyLoc())
                                 Runner.battle = false;
                             p.hp--;
@@ -113,7 +112,6 @@ public class Skills
                         {
                             Runner.cityGrid[b1][i].monsterRally = null;
                             Runner.cityGrid[b1][i].eCo = 0;
-                            System.out.println(b2 + ", " + i);
                             if (b1 == p.getxLoc() && i == p.getyLoc())
                                 Runner.battle = false;
                             p.hp--;
@@ -125,7 +123,6 @@ public class Skills
                         {
                             Runner.cityGrid[b2][i].monsterRally = null;
                             Runner.cityGrid[b2][i].eCo = 0;
-                            System.out.println(b1 + ", " + i);
                             if (b2 == p.getyLoc() && i == p.getxLoc())
                                 Runner.battle = false;
                             p.hp--;
@@ -137,7 +134,6 @@ public class Skills
                         {
                             Runner.cityGrid[b2][i].monsterRally = null;
                             Runner.cityGrid[b2][i].eCo = 0;
-                            System.out.println(b1 + ", " + i);
                             if (b2 == p.getyLoc() && i == p.getxLoc())
                                 Runner.battle = false;
                             p.hp--;
