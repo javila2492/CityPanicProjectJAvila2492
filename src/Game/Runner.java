@@ -93,7 +93,7 @@ public class Runner
         boolean con = false;
         while(!con)
         {
-            System.out.println("Please select which character you would like: Vinchezo, Vellisima, Machina, or Iggy.");
+            System.out.println("Select which character you would like: Vinchezo, Vellisima, Machina, or Iggy.");
             String a = in.nextLine();
             if(a.contains("Vinchezo"))
             {
@@ -154,12 +154,15 @@ public class Runner
         }
         System.out.println(Blocks.printGrid(player));
         System.out.println("You have chosen " + player.name);
+        TimeUnit.SECONDS.sleep(2);
         System.out.println("The city you know and love is in shambles.");
-        TimeUnit.SECONDS.sleep(3);
+        TimeUnit.SECONDS.sleep(2);
         System.out.println("A terrible plague has taken over. You are the last survivor.");
-        TimeUnit.SECONDS.sleep(3);
+        TimeUnit.SECONDS.sleep(2);
         System.out.println("Fight your way to the beacon on the other side of the board.");
-        System.out.println("Remember, choose N, S, E, W to move. F to use skill.)");
+        TimeUnit.SECONDS.sleep(2);
+        System.out.println("(Remember, choose N, S, E, W to move. F to use skill.)");
+        TimeUnit.SECONDS.sleep(2);
         cityGrid[0][0].enterBlocks(player);
         while(gameOn)
         {
@@ -195,12 +198,24 @@ public class Runner
                     }
                 }
             }
-            else {
+            else
+            {
                 System.out.println("Please choose a valid move.");
             }
             if(player.getxLoc() == cityGrid[0].length - 1 && player.getyLoc() == cityGrid[0].length - 1)
             {
                 System.out.println("Salvation! You've made it to the beacon!");
+                TimeUnit.SECONDS.sleep(2);
+                System.out.println("You finally escape the city...but at what cost?");
+                TimeUnit.SECONDS.sleep(2);
+                if(player.hp <= 4)
+                    System.out.println("You are heavily wounded.");
+                TimeUnit.SECONDS.sleep(2);
+                if(player.hp == 1)
+                    System.out.println("You are so wounded that you are on the verge of death.");
+                System.out.println("You look back and bid farewell to the ruined streets.");
+                TimeUnit.SECONDS.sleep(2);
+                System.out.println("It's time to start your new life.");
                 gameOff();
             }
         }
@@ -276,7 +291,7 @@ public class Runner
                 break;
 
         }
-        return true;
+        return false;
     }
 
     public static void gameOff()
@@ -320,6 +335,10 @@ public class Runner
                     {
                         System.out.println("You've defeated all the foes!");
                         battle = false;
+                    }
+                    else
+                    {
+                        System.out.println(currentFoe.desc);
                     }
                 }
             }
@@ -370,6 +389,10 @@ public class Runner
                     {
                         System.out.println("You've defeated all the foes!");
                         battle = false;
+                    }
+                    else
+                    {
+                        System.out.println(currentFoe.desc);
                     }
                 }
             }

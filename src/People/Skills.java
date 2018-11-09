@@ -49,7 +49,7 @@ public class Skills
                 int b2 = parseInt(a2.trim());
                 if((b1 > p.getxLoc() + 3 || b2 > p.getyLoc() + 3) || (b1 < p.getxLoc() - 3 || b2 < p.getyLoc() - 3))
                     System.out.println("That's too far. Vellisima can only teleport up to 3 blocks away.");
-                if((b1 > Runner.cityGrid[0].length || b2 > Runner.cityGrid[0].length) || (b1 < 0 || b2 < 0))
+                if((b1 > Runner.cityGrid[0].length - 1 || b2 > Runner.cityGrid[0].length - 1) || (b1 < 0 || b2 < 0))
                     System.out.println("Vellisima wishes she could teleport out of the city, but she can't.");
                 else
                 {
@@ -93,6 +93,10 @@ public class Skills
                 String a2 = a.substring(a.indexOf(",") + 1);
                 int b1 = parseInt(a1.trim());
                 int b2 = parseInt(a2.trim());
+                if(b1 >= Runner.cityGrid[0].length)
+                    b1 = Runner.cityGrid[0].length - 1;
+                if(b2 >= Runner.cityGrid[0].length)
+                    b2 = Runner.cityGrid[0].length - 1;
                 if(p.getxLoc() == b1 || p.getyLoc() == b2)
                 {
                     if(p.getxLoc() == b1 && p.getyLoc() > b2)

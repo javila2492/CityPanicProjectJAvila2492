@@ -11,7 +11,8 @@ public class Blocks {
     boolean restore;
     boolean trueRestore;
     boolean hasMap;
-    String[] blockDesc = {"You enter a dark alleyway littered with trash.", "You enter the ruins of a shopping mall.", "You enter a dilapidated train station."};
+    String[] blockDesc = {"You enter a dark alleyway littered with trash.", "You enter the ruins of a corner store.", "You enter a dilapidated train station.", "A decaying park greets you.",
+    "You tread onto a boulevard of broken dreams.", "Empty cars litter the roads.", "A thick mist hides most of the block from sight.", "You feel like you're being watched.", "You step into a dark tunnel."};
     public Monsters[] monsterRally = null;
     String desc;
 
@@ -69,19 +70,18 @@ public class Blocks {
             x.hp += hpR;
             trueRestore = false;
         }
+        System.out.println(desc);
         if(hasMap)
         {
             System.out.println("You find a map of the city on the wall. You take a look.");
             System.out.println(printGrid(Runner.player));
         }
-        System.out.println(desc);
         occupant = x;
         if(this.eCo > 0)
         {
             Runner.battle = true;
             System.out.println("You see " + eCo + " monsters!");
-            for(int i = 0; i < this.eCo; i++)
-                System.out.println(this.monsterRally[i].desc);
+            System.out.println(this.monsterRally[0].desc);
         }
         else
             System.out.println("No monsters for now...");
