@@ -1,22 +1,24 @@
 package Game;
 
+import Board.Monsters;
 import People.*;
 import Board.Blocks;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Runner
 {
     public static Blocks[][] cityGrid = null;
     private static boolean gameOn = true;
     public static boolean battle = false;
+    public static Person player = null;
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws InterruptedException {
         Scanner in = new Scanner(System.in);
         boolean pon = false;
-        System.out.println("How large do you want the board to be? Small, Medium, Large, or Deluxe?");
         while(!pon)
         {
+            System.out.println("How large do you want the board to be? Small, Medium, Large, or Deluxe?");
             String a = in.nextLine();
             if(a.toLowerCase().contains("small"))
             {
@@ -45,8 +47,9 @@ public class Runner
         }
         pon = false;
         int monSpawn = 0;
-        System.out.println("How difficult do you want your experience to be? Easy, Medium, Hard, or Nightmare?");
-        while(!pon){
+        while(!pon)
+        {
+            System.out.println("How difficult do you want your experience to be? Easy, Medium, Hard, or Nightmare?");
             String a = in.nextLine();
             if(a.toLowerCase().contains("easy"))
             {
@@ -82,12 +85,11 @@ public class Runner
                 if(x <= 1 && y <= 1)
                     cityGrid[x][y] = new Blocks(x,y, 0);
                 else
-                    cityGrid[x][y] = new Blocks(x,y, (int) (Math.random() * monSpawn));
+                    cityGrid[x][y] = new Blocks(x,y, randomWithRange(0, monSpawn));
             }
         }
-        System.out.println(Blocks.printGrid());
+
         //Setup player and the input scanner
-        Person player = null;
         boolean con = false;
         while(!con)
         {
@@ -99,11 +101,11 @@ public class Runner
                 System.out.println(Vinchezo.desc);
                 System.out.println("HP: " + Vinchezo.hp);
                 System.out.println("ATK: " + Vinchezo.atk);
-                System.out.println("SKILL: " + Vinchezo.skill.name + ", " + Vinchezo.skill.desc);
+                System.out.println("SKILL: " + Vinchezo.skill.name + ", " + Vinchezo.skill.cost + "MP, " + Vinchezo.skill.desc);
                 System.out.println("Are you sure you want to pick this character?");
                 if((in.nextLine().toLowerCase()).contains("yes"))
                 {
-                    player = new Person(Vinchezo.name, Vinchezo.hp, Vinchezo.atk, Vinchezo.skill,0, 0, Vinchezo.sNum);
+                    player = new Person(Vinchezo.name, Vinchezo.hp, Vinchezo.atk, Vinchezo.skill,0, 0, Vinchezo.sNum, 10);
                     con = true;
                 }
             }
@@ -113,11 +115,11 @@ public class Runner
                 System.out.println(Vellisima.desc);
                 System.out.println("HP: " + Vellisima.hp);
                 System.out.println("ATK: " + Vellisima.atk);
-                System.out.println("SKILL: " + Vellisima.skill.name + ", " + Vellisima.skill.desc);
+                System.out.println("SKILL: " + Vellisima.skill.name + ", " + Vellisima.skill.cost + "MP, " + Vellisima.skill.desc);
                 System.out.println("Are you sure you want to pick this character?");
                 if((in.nextLine().toLowerCase()).contains("yes"))
                 {
-                    player = new Person(Vellisima.name, Vellisima.hp, Vellisima.atk, Vellisima.skill,0, 0, Vellisima.sNum);
+                    player = new Person(Vellisima.name, Vellisima.hp, Vellisima.atk, Vellisima.skill,0, 0, Vellisima.sNum, 10);
                     con = true;
                 }
             }
@@ -127,11 +129,11 @@ public class Runner
                 System.out.println(Iggy.desc);
                 System.out.println("HP: " + Iggy.hp);
                 System.out.println("ATK: " + Iggy.atk);
-                System.out.println("SKILL: " + Iggy.skill.name + ", " + Iggy.skill.desc);
+                System.out.println("SKILL: " + Iggy.skill.name + ", " + Iggy.skill.cost + "MP, " + Iggy.skill.desc);
                 System.out.println("Are you sure you want to pick this character?");
                 if((in.nextLine().toLowerCase()).contains("yes"))
                 {
-                    player = new Person(Iggy.name, Iggy.hp, Iggy.atk, Iggy.skill,0, 0, Iggy.sNum);
+                    player = new Person(Iggy.name, Iggy.hp, Iggy.atk, Iggy.skill,0, 0, Iggy.sNum, 10);
                     con = true;
                 }
             }
@@ -141,33 +143,66 @@ public class Runner
                 System.out.println(Machina.desc);
                 System.out.println("HP: " + Machina.hp);
                 System.out.println("ATK: " + Machina.atk);
-                System.out.println("SKILL: " + Machina.skill.name + ", " + Machina.skill.desc);
+                System.out.println("SKILL: " + Machina.skill.name + ", " + Machina.skill.cost + "MP, " + Machina.skill.desc);
                 System.out.println("Are you sure you want to pick this character?");
                 if((in.nextLine().toLowerCase()).contains("yes"))
                 {
-                    player = new Person(Machina.name, Machina.hp, Machina.atk, Machina.skill,0, 0, Machina.sNum);
+                    player = new Person(Machina.name, Machina.hp, Machina.atk, Machina.skill,0, 0, Machina.sNum, 10);
                     con = true;
                 }
             }
         }
+        System.out.println(Blocks.printGrid(player));
         System.out.println("You have chosen " + player.name);
+        System.out.println("The city you know and love is in shambles.");
+        TimeUnit.SECONDS.sleep(3);
+        System.out.println("A terrible plague has taken over. You are the last survivor.");
+        TimeUnit.SECONDS.sleep(3);
+        System.out.println("Fight your way to the beacon on the other side of the board.");
+        System.out.println("Remember, choose N, S, E, W to move. F to use skill.)");
         cityGrid[0][0].enterBlocks(player);
         while(gameOn)
         {
-            if(!battle)
-                System.out.println("Where would you like to move? (Choose N, S, E, W). F to use skill.");
+            System.out.println("Your HP: " + player.hp);
+            System.out.println("Your MP: " + player.mp);
             String move = in.nextLine();
             if(validMove(move, player, cityGrid))
             {
                 if(!battle)
                     System.out.println("Your coordinates: row = " + player.getxLoc() + " col = " + player.getyLoc());
-
+                if(battle)
+                {
+                    while(battle)
+                    {
+                        System.out.println("Type atk to do a regular attack, stk to do a super attack, or f to use your skill!");
+                        System.out.println("Your HP: " + player.hp);
+                        System.out.println("Your MP: " + player.mp);
+                        move = in.nextLine().trim().toLowerCase();
+                        if(move.contains("atk"))
+                        {
+                            battleMove(move, player);
+                        }
+                        if(move.contains("stk"))
+                        {
+                            battleMove(move, player);
+                        }
+                        if(move.contains("f"))
+                            validMove(move, player, cityGrid);
+                    }
+                    if(player.hp > 0)
+                    {
+                        System.out.println("You can move freely once more.");
+                    }
+                }
             }
             else {
                 System.out.println("Please choose a valid move.");
             }
-
-
+            if(player.getxLoc() == cityGrid[0].length - 1 && player.getyLoc() == cityGrid[0].length - 1)
+            {
+                System.out.println("Salvation! You've made it to the beacon!");
+                gameOff();
+            }
         }
         in.close();
     }
@@ -184,11 +219,6 @@ public class Runner
         move = move.toLowerCase().trim();
         switch (move) {
             case "n":
-                if(battle)
-                {
-                    System.out.println("You can't move blocks now! You're in a battle!");
-                    break;
-                }
                 if (p.getxLoc() > 0)
                 {
                     map[p.getxLoc()][p.getyLoc()].leaveBlocks(p);
@@ -200,11 +230,6 @@ public class Runner
                     return false;
                 }
             case "e":
-                if(battle)
-                {
-                    System.out.println("You can't move blocks now! You're in a battle!");
-                    break;
-                }
                 if (p.getyLoc()< map[p.getyLoc()].length -1)
                 {
                     map[p.getxLoc()][p.getyLoc()].leaveBlocks(p);
@@ -217,11 +242,6 @@ public class Runner
                 }
 
             case "s":
-                if(battle)
-                {
-                    System.out.println("You can't move blocks now! You're in a battle!");
-                    break;
-                }
                 if (p.getxLoc() < map.length - 1)
                 {
                     map[p.getxLoc()][p.getyLoc()].leaveBlocks(p);
@@ -234,11 +254,6 @@ public class Runner
                 }
 
             case "w":
-                if(battle)
-                {
-                    System.out.println("You can't move blocks now! You're in a battle!");
-                    break;
-                }
                 if (p.getyLoc() > 0)
                 {
                     map[p.getxLoc()][p.getyLoc()].leaveBlocks(p);
@@ -250,7 +265,6 @@ public class Runner
                     return false;
                 }
             case "f":
-                Scanner in = new Scanner(System.in);
                 boolean con = false;
                 while(!con)
                 {
@@ -264,11 +278,117 @@ public class Runner
         }
         return true;
     }
+
     public static void gameOff()
     {
         gameOn = false;
     }
 
+    public static int randomWithRange(int min, int max)
+    {
+        int range = (max - min) + 1;
+        return (int)(Math.random() * range) + min;
+    }
 
-
+    public static void battleMove(String move, Person p)
+    {
+        move = move.toLowerCase().trim();
+        Monsters currentFoe = cityGrid[p.getxLoc()][p.getyLoc()].monsterRally[0];
+        if(move.contains("atk"))
+        {
+            int pAtk = p.atk + randomWithRange(1, 6);
+            int fAtk = currentFoe.atk + randomWithRange(0, currentFoe.atk);
+            if(pAtk > fAtk)
+            {
+                currentFoe.hp -= p.atk;
+                System.out.println("You dealt " + p.atk + " damage to the " + currentFoe.name + "!");
+                if(currentFoe.hp <= 0)
+                {
+                    System.out.println("You've defeated the " + currentFoe.name + "!");
+                    p.mp += 1;
+                    cityGrid[p.getxLoc()][p.getyLoc()].monsterRally[0] = null;
+                    for(int i = 0; i < cityGrid[p.getxLoc()][p.getyLoc()].monsterRally.length; i++)
+                    {
+                        if(!(i + 1 >= cityGrid[p.getxLoc()][p.getyLoc()].monsterRally.length))
+                        {
+                            cityGrid[p.getxLoc()][p.getyLoc()].monsterRally[i] = cityGrid[p.getxLoc()][p.getyLoc()].monsterRally[i + 1];
+                            cityGrid[p.getxLoc()][p.getyLoc()].monsterRally[i + 1] = null;
+                        }
+                    }
+                    currentFoe = cityGrid[p.getxLoc()][p.getyLoc()].monsterRally[0];
+                    if(currentFoe == null)
+                    {
+                        System.out.println("You've defeated all the foes!");
+                        battle = false;
+                    }
+                }
+            }
+            else
+            {
+                if (pAtk < fAtk)
+                {
+                    p.hp -= fAtk - pAtk;
+                    System.out.println("You took " + (fAtk - pAtk) + " damage from " + currentFoe.name + "!");
+                    if (p.hp <= 0)
+                    {
+                        System.out.println("You've been defeated by the " + currentFoe.name + "...");
+                        battle = false;
+                        gameOff();
+                    }
+                }
+                if(pAtk == fAtk)
+                    System.out.println("It's a power draw!");
+            }
+        }
+        if(move.contains("stk"))
+        {
+            if(p.mp <= 0)
+            {
+                System.out.println("You don't have enough MP for a super attack. Gain MP by going to new blocks and beating foes.");
+                return;
+            }
+            p.mp--;
+            int pAtk = p.atk + randomWithRange(1, 6) + randomWithRange(1, p.atk);
+            int fAtk = currentFoe.atk + randomWithRange(0, currentFoe.atk);
+            if(pAtk > fAtk)
+            {
+                currentFoe.hp -= p.atk;
+                System.out.println("You dealt " + p.atk + " damage to the " + currentFoe.name + "!");
+                if(currentFoe.hp <= 0)
+                {
+                    System.out.println("You've defeated the " + cityGrid[p.getxLoc()][p.getyLoc()].monsterRally[0].name + "!");
+                    for(int i = 0; i < cityGrid[p.getxLoc()][p.getyLoc()].monsterRally.length; i++)
+                    {
+                        if(!(i + 1 >= cityGrid[p.getxLoc()][p.getyLoc()].monsterRally.length))
+                        {
+                            cityGrid[p.getxLoc()][p.getyLoc()].monsterRally[i] = cityGrid[p.getxLoc()][p.getyLoc()].monsterRally[i + 1];
+                            cityGrid[p.getxLoc()][p.getyLoc()].monsterRally[i + 1] = null;
+                        }
+                    }
+                    currentFoe = cityGrid[p.getxLoc()][p.getyLoc()].monsterRally[0];
+                    if(currentFoe == null)
+                    {
+                        System.out.println("You've defeated all the foes!");
+                        battle = false;
+                    }
+                }
+            }
+            else
+            {
+                if (pAtk < fAtk)
+                {
+                    p.hp -= fAtk - pAtk;
+                    System.out.println("You took " + (fAtk - pAtk) + " damage from " + currentFoe.name + "!");
+                    if (p.hp <= 0)
+                    {
+                        System.out.println("You've been defeated by the " + currentFoe.name + "...");
+                        battle = false;
+                        gameOff();
+                    }
+                }
+                if(pAtk == fAtk)
+                    System.out.println("It's a power draw!");
+            }
+        }
+    }
 }

@@ -1,11 +1,13 @@
 package People;
 
+import Board.Blocks;
 import Game.Runner;
 
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
+/* Contains both a Skill constructor and a function to execute skills */
 public class Skills
 {
     public String name;
@@ -19,6 +21,12 @@ public class Skills
     }
     public static void useSkill(int s, Person p)
     {
+        if(p.mp < p.skill.cost)
+        {
+            System.out.println("You don't have enough MP for that skill. Gain MP by going to new blocks and beating foes.");
+            return;
+        }
+        p.mp -= p.skill.cost;
         Scanner in = new Scanner(System.in);
         String a;
         if(s == 1)
@@ -37,10 +45,12 @@ public class Skills
                 a = in.nextLine().trim();
                 String a1 = a.substring(0, a.indexOf(","));
                 String a2 = a.substring(a.indexOf(",") + 1);
-                int b1 = parseInt(a1);
-                int b2 = parseInt(a2);
+                int b1 = parseInt(a1.trim());
+                int b2 = parseInt(a2.trim());
                 if((b1 > p.getxLoc() + 3 || b2 > p.getyLoc() + 3) || (b1 < p.getxLoc() - 3 || b2 < p.getyLoc() - 3))
                     System.out.println("That's too far. Vellisima can only teleport up to 3 blocks away.");
+                if((b1 > Runner.cityGrid[0].length || b2 > Runner.cityGrid[0].length) || (b1 < 0 || b2 < 0))
+                    System.out.println("Vellisima wishes she could teleport out of the city, but she can't.");
                 else
                 {
                     System.out.println("SHAZAM! You have been warped to " + b1 + ", " + b2);
@@ -61,13 +71,80 @@ public class Skills
                 a = in.nextLine().trim();
                 String a1 = a.substring(0, a.indexOf(","));
                 String a2 = a.substring(a.indexOf(",") + 1);
-                int b1 = parseInt(a1);
-                int b2 = parseInt(a2);
-                System.out.println("ZA FOOL! A sandstorm ravages " + b1 + ", " + b2 + " killing everything in it!");
+                int b1 = parseInt(a1.trim());
+                int b2 = parseInt(a2.trim());
+                System.out.println("ZA FOOL! A sandstorm ravages " + b1 + ", " + b2 + " killing every monster in it!");
                 Runner.cityGrid[b1][b2].eCo = 0;
                 Runner.cityGrid[b1][b2].monsterRally = null;
                 if(b1 == p.getxLoc() && b2 == p.getyLoc())
                     Runner.battle = false;
+                pon = true;
+            }
+        }
+        if(s == 4)
+        {
+            boolean pon = false;
+            System.out.println("Machina loads up their gun.");
+            while (!pon)
+            {
+                System.out.println("Enter coords perpendicular to your direction in x,y format.");
+                a = in.nextLine().trim();
+                String a1 = a.substring(0, a.indexOf(","));
+                String a2 = a.substring(a.indexOf(",") + 1);
+                int b1 = parseInt(a1.trim());
+                int b2 = parseInt(a2.trim());
+                if(p.getxLoc() == b1 || p.getyLoc() == b2)
+                {
+                    if(p.getxLoc() == b1 && p.getyLoc() > b2)
+                    {
+                        for(int i = b2; i <= Runner.cityGrid[b1].length; i++)
+                        {
+                            Runner.cityGrid[b1][i].monsterRally = null;
+                            Runner.cityGrid[b1][i].eCo = 0;
+                            System.out.println(b2 + ", " + i);
+                            if (b1 == p.getxLoc() && i == p.getyLoc())
+                                Runner.battle = false;
+                            p.hp--;
+                        }
+                    }
+                    if(p.getxLoc() == b1 && p.getyLoc() < b2)
+                    {
+                        for(int i = b2; i >= 0; i--)
+                        {
+                            Runner.cityGrid[b1][i].monsterRally = null;
+                            Runner.cityGrid[b1][i].eCo = 0;
+                            System.out.println(b2 + ", " + i);
+                            if (b1 == p.getxLoc() && i == p.getyLoc())
+                                Runner.battle = false;
+                            p.hp--;
+                        }
+                    }
+                    if(p.getyLoc() == b2 && p.getxLoc() > b1)
+                    {
+                        for(int i = b1; i <= Runner.cityGrid[b2].length; i++)
+                        {
+                            Runner.cityGrid[b2][i].monsterRally = null;
+                            Runner.cityGrid[b2][i].eCo = 0;
+                            System.out.println(b1 + ", " + i);
+                            if (b2 == p.getyLoc() && i == p.getxLoc())
+                                Runner.battle = false;
+                            p.hp--;
+                        }
+                    }
+                    if(p.getyLoc() == b2 && p.getxLoc() < b1)
+                    {
+                        for(int i = b1; i >= 0; i--)
+                        {
+                            Runner.cityGrid[b2][i].monsterRally = null;
+                            Runner.cityGrid[b2][i].eCo = 0;
+                            System.out.println(b1 + ", " + i);
+                            if (b2 == p.getyLoc() && i == p.getxLoc())
+                                Runner.battle = false;
+                            p.hp--;
+                        }
+                    }
+                }
+                System.out.println("Machina's firepower mows down everything in sight! But Machina takes " + (14 - p.hp) + " damage!");
                 pon = true;
             }
         }

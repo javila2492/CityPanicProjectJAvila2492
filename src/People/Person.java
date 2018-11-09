@@ -10,6 +10,7 @@ public class Person {
     public Skills skill;
     public int xLoc, yLoc;
     public int skillNum;
+    public int mp;
 
 
     public int getxLoc() {
@@ -28,7 +29,7 @@ public class Person {
         this.yLoc = yLoc;
     }
 
-    public Person (String name, int hp, int atk, Skills skill, int xLoc, int yLoc, int skillNum)
+    public Person (String name, int hp, int atk, Skills skill, int xLoc, int yLoc, int skillNum, int mp)
     {
         this.name = name;
         this.hp = hp;
@@ -37,6 +38,7 @@ public class Person {
         this.xLoc = xLoc;
         this.yLoc = yLoc;
         this.skillNum = skillNum;
+        this.mp = mp;
     }
 
 
